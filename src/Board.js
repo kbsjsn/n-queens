@@ -79,11 +79,21 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      var refRow = this.rows()[rowIndex];
+      if(refRow.includes(1)) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      var nRows = this.get('n');
+      for(var i = 0; i < nRows; i++) {
+        if(this.hasRowConflictAt(i)) {
+          return true;
+        };
+      }
       return false; // fixme
     },
 
@@ -94,11 +104,27 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      var matrix = this.rows();
+      var nRowsCols = this.get('n');
+
+      for(var i = 0; i < nRowsCols; i++) {
+        if(matrix[i][colIndex] === 1) {
+          return true;
+        }
+      }
+
       return false; // fixme
+
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      var nCols = this.get('n');
+      for(var i = 0; i < nCols; i++) {
+        if(this.hasColConflictAt(i)) {
+          return true;
+        };
+      }
       return false; // fixme
     },
 
@@ -146,3 +172,7 @@
   };
 
 }());
+
+var board = new Board({n:5});
+this.board.togglePiece(1,1);
+console.log("THIS IS BOARD WITH N=5", this.board.hasAnyColConflicts());
